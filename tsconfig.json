@@ -8,6 +8,24 @@
       ],
       "@/assets/*": [
         "./assets/*"
+      ],
+      "@ichrono/theme": [
+        "./packages/theme/src/index.ts"
+      ],
+      "@ichrono/theme/*": [
+        "./packages/theme/src/*"
+      ],
+      "@ichrono/ui": [
+        "./packages/ui/src/index.ts"
+      ],
+      "@ichrono/ui/*": [
+        "./packages/ui/src/*"
+      ],
+      "@ichrono/auth": [
+        "./packages/auth/src/index.tsx"
+      ],
+      "@ichrono/auth/*": [
+        "./packages/auth/src/*"
       ]
     }
   },
@@ -15,6 +33,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "apps/**/*.ts",
+    "apps/**/*.tsx"
   ]
 }

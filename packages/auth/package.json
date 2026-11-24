@@ -1,0 +1,11 @@
+{
+  "name": "@ichrono/auth",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "private": true,
+  "peerDependencies": {
+    "react": "*",
+    "expo-router": "*"
+  }
+}
