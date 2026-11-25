@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, StyleSheet, View, Text } from 'react-native';
 import { Tabs } from 'expo-router';
 import { Palette, FontSizes, Spacing, Shadows } from '@/constants/theme';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
+import { useBreakpoint } from '@ichrono/ui';
 
 function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
   return (

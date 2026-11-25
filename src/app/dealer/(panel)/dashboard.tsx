@@ -1,9 +1,8 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
-import Icon from '@/components/common/Icon';
-import { NEW_ORDERS } from '@/data/dummy';
+import { NEW_ORDERS } from '@/data';
+import { useBreakpoint, Icon } from '@ichrono/ui';
 
 /** backend_ref/views/dealer/dashboard.blade.php */
 export default function DealerDashboard() {
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.white,
     borderRadius: 10,
     padding: Spacing.xl,
-    shadowColor: '#012970',
+    shadowColor: Palette.primary,
     shadowOpacity: 0.08,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
@@ -141,12 +140,12 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.white,
     borderRadius: Radius.lg,
     overflow: 'hidden',
-    shadowColor: '#012970',
+    shadowColor: Palette.primary,
     shadowOpacity: 0.08,
     shadowRadius: 16,
     shadowOffset: { width: 0, height: 2 },
   },
-  figure: { height: 200, backgroundColor: '#F1F4F6' },
+  figure: { height: 200, backgroundColor: Palette.surfaceMuted },
   orderImg: { width: '100%', height: '100%' },
   orderFlex: { flexDirection: 'row', alignItems: 'center', padding: Spacing.lg, gap: 8 },
   orderName: { color: Palette.primary, fontSize: FontSizes.md, fontWeight: FontWeights.semibold },

@@ -3,8 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
 import { SplitFrame } from '@/components/dealer/DealerFrames';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
+import { Field, Btn } from '@ichrono/ui';
 
 /** backend_ref/views/dealer/auth/forgotPassword.blade.php */
 export default function DealerForgotPassword() {

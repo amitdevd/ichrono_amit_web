@@ -3,10 +3,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
 import { AdminH, AdminLoginFrame } from '@/components/admin/AdminAuthFrame';
-import Field, { ErrorText } from '@/components/common/Field';
-import { CheckBox } from '@/components/common/Controls';
-import Btn from '@/components/common/Btn';
 import { useAuth } from '@/context/auth-context';
+import { Field, ErrorText, CheckBox, Btn } from '@ichrono/ui';
 
 /** backend_ref/views/admin/setting/login.blade.php */
 export default function AdminLoginScreen() {

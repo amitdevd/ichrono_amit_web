@@ -4,8 +4,7 @@ import { getHomeRouteForRole, useAuth } from '@/context/auth-context';
 
 /**
  * "/" opens the User Web home page directly (as in backend_ref).
- * Signed-in dealers/admins go to their dashboards. The old gateway screen
- * (apps/shell/src/GatewayScreen.tsx) is no longer used here.
+ * Signed-in dealers/admins go to their dashboards.
  * Dealer and admin logins live at /dealer/login and /admin/login.
  */
 export default function Index() {

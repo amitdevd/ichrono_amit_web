@@ -1,16 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
 import { Card, PageTitle, TableAction } from '@/components/admin/AdminUI';
-import Btn from '@/components/common/Btn';
-import AppModal from '@/components/common/AppModal';
-import Field from '@/components/common/Field';
-import DateField from '@/components/common/DateField';
-import SelectField from '@/components/common/SelectField';
-import { Radio, ToggleSwitch } from '@/components/common/Controls';
-import DataTable, { type Column } from '@/components/common/DataTable';
-import { COUNTRIES, DEALERS, type Dealer, type DealerStatus } from '@/data/dummy';
+import { COUNTRIES, DEALERS, type Dealer, type DealerStatus } from '@/data';
+import { useBreakpoint, Btn, AppModal, Field, DateField, SelectField, Radio, ToggleSwitch, DataTable, type Column } from '@ichrono/ui';
 
 /** backend_ref/views/admin/dealer-Management/index.blade.php */
 const TABS: { key: DealerStatus; label: string }[] = [
@@ -64,9 +57,10 @@ export default function DealerManagement() {
   const update = (id: number, patch: Partial<Dealer>) =>
     setDealers((list) => list.map((d) => (d.id === id ? { ...d, ...patch } : d)));
 
-  const eye = (kind: ModalKind, label: string) => (d: Dealer) => (
-    <TableAction icon="eye" label={label} onPress={() => openModal(kind, d)} />
-  );
+  const eye = (kind: ModalKind, label: string) =>
+    function EyeAction(d: Dealer) {
+      return <TableAction icon="eye" label={label} onPress={() => openModal(kind, d)} />;
+    };
 
   const baseCols: Column<Dealer>[] = [
     { key: 'sr', title: 'Sr.No', width: 70, render: (_d, i) => <Text style={styles.bold}>{i + 1}</Text> },
@@ -294,7 +288,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.md,
     borderWidth: 1,
     borderColor: Palette.divider,
-    backgroundColor: '#FAFCFC',
+    backgroundColor: Palette.surfaceSubtle,
   },
   radioRow: { flexDirection: 'row', gap: 12, marginTop: Spacing.sm, marginBottom: Spacing.lg },
 });

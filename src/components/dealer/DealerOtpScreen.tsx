@@ -3,8 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
 import { CenterFrame, ResTitle } from './DealerFrames';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
+import { Field, Btn } from '@ichrono/ui';
 
 /**
  * `OTP Verification` card shared by

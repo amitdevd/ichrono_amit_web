@@ -3,9 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
 import { BoxStep, SignupFrame } from '@/components/dealer/DealerFrames';
-import { DocumentBox } from '@/components/common/ImageUpload';
-import Btn from '@/components/common/Btn';
 import { useDealerSignup, type DealerSignupData } from '@/context/dealer-signup';
+import { DocumentBox, Btn } from '@ichrono/ui';
 
 /**
  * Dealer Create Account – Step 5: documents upload

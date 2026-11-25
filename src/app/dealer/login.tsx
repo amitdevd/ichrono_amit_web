@@ -3,11 +3,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
 import { SplitFrame } from '@/components/dealer/DealerFrames';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
-import Icon from '@/components/common/Icon';
 import { useAuth } from '@/context/auth-context';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
+import { Field, Btn, Icon, useBreakpoint } from '@ichrono/ui';
 
 /** backend_ref/views/dealer/auth/login.blade.php */
 export default function DealerLoginScreen() {
@@ -35,7 +32,7 @@ export default function DealerLoginScreen() {
   return (
     <SplitFrame>
       <Text style={[styles.h1, isMobile && { fontSize: 24 }]}>
-        Welcome To <Text style={styles.gold}>I-CHRONO</Text>
+        Welcome To <Text style={styles.gold}>ANDY DEV DESIGN</Text>
       </Text>
       <Text style={styles.h2}>Login</Text>
       {errors.general ? <Text style={styles.danger}>{errors.general}</Text> : null}

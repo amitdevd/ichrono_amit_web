@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
 import { PageTitle } from '@/components/admin/AdminUI';
-import { Radio } from '@/components/common/Controls';
-import DateField from '@/components/common/DateField';
-import SelectField from '@/components/common/SelectField';
-import { COUNTRIES } from '@/data/dummy';
+import { COUNTRIES } from '@/data';
+import { useBreakpoint, Radio, DateField, SelectField } from '@ichrono/ui';
 
 /** backend_ref/views/admin/dashboard/index.blade.php */
 const PERIODS = ['Today', 'This Week', 'This Months'];
@@ -147,9 +144,9 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.white,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E3E6F0',
+    borderColor: Palette.neutralBorder,
     overflow: 'hidden',
-    shadowColor: '#3A3B45',
+    shadowColor: Palette.neutralDark,
     shadowOpacity: 0.08,
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 3 },
@@ -163,7 +160,7 @@ const styles = StyleSheet.create({
   panelHeader: { flexDirection: 'row', justifyContent: 'space-between' },
   cardHeaderText: { color: Palette.white, fontSize: FontSizes.lg, fontWeight: FontWeights.medium },
   cardBodyCenter: { paddingVertical: 28, alignItems: 'center' },
-  statValue: { color: '#5A5C69', fontSize: FontSizes.xl, fontWeight: FontWeights.bold },
+  statValue: { color: Palette.neutralTextSoft, fontSize: FontSizes.xl, fontWeight: FontWeights.bold },
   totalPill: {
     backgroundColor: Palette.secondary,
     borderRadius: Radius.pill,

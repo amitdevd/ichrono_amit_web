@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { LOGO_ON_LIGHT } from '@/constants/brand';
 import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router, usePathname } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
 import { useAuth } from '@/context/auth-context';
-import Icon from '@/components/common/Icon';
+import { useBreakpoint, Icon } from '@ichrono/ui';
 
 /**
  * Dealer panel chrome – backend_ref/views/dealer/layouts/adminHeader.blade.php
@@ -14,7 +14,18 @@ import Icon from '@/components/common/Icon';
 const MENU = [
   { label: 'Dashboard', icon: 'table-columns', href: '/dealer/dashboard' },
   { label: 'Listings', icon: 'list', href: '/dealer/listings' },
+  { label: 'Listing Settings', icon: 'sliders', href: '/dealer/listing-settings' },
 ] as const;
+
+/** Listing pages that keep "Listings" highlighted in the sidebar */
+const LISTING_PAGES = [
+  '/dealer/create-listing',
+  '/dealer/get-listing',
+  '/dealer/listing-info',
+  '/dealer/product-details',
+  '/dealer/add-',
+  '/dealer/thanku',
+];
 
 const SIDEBAR_W = 270;
 const HEADER_H = 70;
@@ -27,10 +38,13 @@ export default function DealerShell({ children }: { children: React.ReactNode })
   const [drawer, setDrawer] = useState(false);
   const [menu, setMenu] = useState(false);
 
-  useEffect(() => {
+  // Close the drawer / profile menu whenever the page changes.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
     setDrawer(false);
     setMenu(false);
-  }, [pathname]);
+  }
 
   const name = user?.role === 'dealer' ? user.name : 'K. Anderson';
   const signOut = () => logout('/dealer/login');
@@ -38,7 +52,8 @@ export default function DealerShell({ children }: { children: React.ReactNode })
   const nav = (
     <View style={{ paddingVertical: Spacing.xl, paddingHorizontal: Spacing.lg, gap: 6 }}>
       {MENU.map((m) => {
-        const active = pathname.startsWith(m.href);
+        const active =
+          pathname.startsWith(m.href) || (m.href === '/dealer/listings' && LISTING_PAGES.some((p) => pathname.startsWith(p)));
         return (
           <Pressable
             key={m.href}
@@ -61,7 +76,9 @@ export default function DealerShell({ children }: { children: React.ReactNode })
     <View style={styles.root}>
       <View style={styles.header}>
         <View style={[styles.logoWrap, lgUp && { width: SIDEBAR_W - 20 }]}>
-          <Image source={require('@/assets/images/Logo.png')} style={[styles.logo, isMobile && { width: 130 }]} resizeMode="contain" />
+          <View style={styles.logoBadge}>
+            <Image source={LOGO_ON_LIGHT} style={[styles.logo, isMobile && { width: 100, height: 42 }]} resizeMode="contain" />
+          </View>
         </View>
         <Pressable
           onPress={() => (lgUp ? setCollapsed((c) => !c) : setDrawer(true))}
@@ -114,7 +131,9 @@ export default function DealerShell({ children }: { children: React.ReactNode })
         <View style={styles.drawerBackdrop}>
           <View style={styles.drawer}>
             <View style={styles.drawerHead}>
-              <Image source={require('@/assets/images/Logo.png')} style={{ width: 150, height: 40 }} resizeMode="contain" />
+              <View style={styles.logoBadge}>
+                <Image source={LOGO_ON_LIGHT} style={{ width: 110, height: 46 }} resizeMode="contain" />
+              </View>
               <Pressable onPress={() => setDrawer(false)} hitSlop={10}>
                 <Icon name="xmark" size={20} color={Palette.primary} />
               </Pressable>
@@ -129,14 +148,14 @@ export default function DealerShell({ children }: { children: React.ReactNode })
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#F6F9FF' },
+  root: { flex: 1, backgroundColor: Palette.surfaceSubtle },
   header: {
     height: HEADER_H,
     backgroundColor: Palette.white,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: Spacing.lg,
-    shadowColor: '#012970',
+    shadowColor: Palette.primary,
     shadowOpacity: 0.1,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 2 },
@@ -144,7 +163,8 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   logoWrap: { marginRight: Spacing.md },
-  logo: { width: 170, height: 46 },
+  logoBadge: { paddingHorizontal: 8 },
+  logo: { width: 120, height: 50 },
   bell: { padding: 10, marginRight: Spacing.sm },
   profile: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   avatar: { width: 36, height: 36, borderRadius: 18, backgroundColor: Palette.surfaceIce },
@@ -152,7 +172,7 @@ const styles = StyleSheet.create({
   sidebar: {
     width: SIDEBAR_W,
     backgroundColor: Palette.white,
-    shadowColor: '#012970',
+    shadowColor: Palette.primary,
     shadowOpacity: 0.1,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
@@ -177,7 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.white,
     borderRadius: Radius.md,
     paddingVertical: 6,
-    shadowColor: '#000',
+    shadowColor: Palette.shadow,
     shadowOpacity: 0.15,
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 4 },
@@ -188,7 +208,7 @@ const styles = StyleSheet.create({
   ddName: { color: Palette.primary, fontWeight: FontWeights.semibold, fontSize: FontSizes.md },
   ddRole: { color: Palette.textSecondary, fontSize: FontSizes.xs, marginTop: 2 },
   ddItem: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 10, paddingHorizontal: 16 },
-  ddHover: { backgroundColor: '#F6F9FF' },
+  ddHover: { backgroundColor: Palette.surfaceSubtle },
   ddText: { color: Palette.textBody, fontSize: FontSizes.sm },
   ddDivider: { height: 1, backgroundColor: Palette.divider },
   drawerBackdrop: { flex: 1, flexDirection: 'row', backgroundColor: 'rgba(0,0,0,0.45)' },

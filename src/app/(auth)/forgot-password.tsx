@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { router } from 'expo-router';
 import { Spacing } from '@/constants/theme';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
-import { AuthText, AuthTitle, UserAuthFrame } from '@/components/web/UserAuthFrame';
+import { AuthText, AuthTitle, UserAuthFrame } from '@/components/user/UserAuthFrame';
+import { Field, Btn } from '@ichrono/ui';
 
 /** backend_ref/views/user/setting/reset-password.blade.php */
 export default function UserForgotPasswordScreen() {

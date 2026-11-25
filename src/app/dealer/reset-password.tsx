@@ -3,10 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
 import { CenterFrame, ResTitle } from '@/components/dealer/DealerFrames';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
-import AppModal from '@/components/common/AppModal';
-import Icon from '@/components/common/Icon';
+import { Field, Btn, AppModal, Icon } from '@ichrono/ui';
 
 /** backend_ref/views/dealer/auth/resetPassword.blade.php (+ #resetModal) */
 const PASSWORD_RULE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;

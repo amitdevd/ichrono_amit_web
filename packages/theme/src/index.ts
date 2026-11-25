@@ -1,62 +1,120 @@
-// ─── iChrono Exact CSS Variables (from variable.css & style.css) ─────────────
+import { ThemeConfig } from '../../../theme.config';
+
+// ─── Colour helpers ──────────────────────────────────────────────────────────
+type RGB = [number, number, number];
+
+function hexToRgb(hex: string): RGB {
+  const h = hex.replace('#', '');
+  const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+  const n = parseInt(full.slice(0, 6), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function rgbToHex([r, g, b]: RGB): string {
+  return '#' + [r, g, b].map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+
+/** Blend `color` towards `target` by `amount` (0 = color, 1 = target). */
+export function mix(color: string, target: string, amount: number): string {
+  const a = hexToRgb(color);
+  const b = hexToRgb(target);
+  return rgbToHex([a[0] + (b[0] - a[0]) * amount, a[1] + (b[1] - a[1]) * amount, a[2] + (b[2] - a[2]) * amount]);
+}
+
+/** Lighter version of a colour (amount 0–1 towards white). */
+export const tint = (color: string, amount: number) => mix(color, '#FFFFFF', amount);
+/** Darker version of a colour (amount 0–1 towards black). */
+export const shade = (color: string, amount: number) => mix(color, '#000000', amount);
+/** Same colour with transparency, e.g. withAlpha(Palette.primary, 0.1). */
+export function withAlpha(color: string, alpha: number): string {
+  const [r, g, b] = hexToRgb(color);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+// ─── Palette (built from theme.config.ts) ────────────────────────────────────
+// The original backend_ref values (variable.css) are noted on the right; they are
+// what you get with the default theme.config.ts.
+const P = ThemeConfig.primary;
+const S = ThemeConfig.secondary;
+const A = ThemeConfig.accentLight;
+const B = ThemeConfig.background;
+
 export const Palette = {
-  // Brand Colors (from variable.css)
-  primary: '#003A4E',        // Deep Teal Blue (navbar, primary buttons, titles)
-  secondary: '#A8824F',      // Gold / Bronze accent
-  secondary2: '#FFFFFF',     // Pure White
-  third: '#0E1C21',          // Dark Teal / Near Black
-  loginBack: '#7F9CA6',      // Slate Teal Border (form inputs, card borders, placeholders)
-  fourth: '#E2C07C',         // Champagne / Light Gold
-  fifth: 'rgba(224, 247, 255, 0.6)', // Ice Blue Overlay
+  // Brand colours
+  primary: P, //                               #003A4E deep teal
+  secondary: S, //                             #A8824F gold / bronze
+  secondary2: '#FFFFFF',
+  third: mix(P, '#0B0B0B', 0.75), //           #0E1C21 near-black of the brand
+  loginBack: tint(P, 0.5), //                  #7F9CA6 input / card borders, placeholders
+  fourth: A, //                                #E2C07C champagne
+  fifth: withAlpha(tint(P, 0.88), 0.6), //     ice-blue overlay
 
-  // Aliases for convenience
-  gold: '#A8824F',
-  goldLight: '#E2C07C',
-  goldDark: '#8C6B3D',
-  goldMuted: 'rgba(168, 130, 79, 0.15)',
+  // Aliases
+  gold: S,
+  goldLight: A,
+  goldDark: shade(S, 0.17), //                 #8C6B3D
+  goldMuted: withAlpha(S, 0.15),
 
-  teal: '#003A4E',
-  tealDark: '#0E1C21',
-  tealLight: '#224A56',
-  tealMuted: 'rgba(0, 58, 78, 0.1)',
+  teal: P,
+  tealDark: mix(P, '#0B0B0B', 0.75),
+  tealLight: tint(P, 0.13), //                 #224A56
+  tealMuted: withAlpha(P, 0.1),
 
   white: '#FFFFFF',
-  black: '#0E1C21',
+  black: mix(P, '#0B0B0B', 0.75),
 
-  // Surfaces & Backgrounds
+  // Surfaces & backgrounds
   background: '#FFFFFF',
-  backgroundPage: '#F8F9FC',
-  backgroundNavbar: '#003A4E',
+  backgroundPage: B, //                        page background (theme.config background)
+  backgroundNavbar: P,
   surface: '#FFFFFF',
   surfaceCard: '#FFFFFF',
-  surfaceTeal: '#003A4E',
-  surfaceIce: '#F2F8FA',
+  surfaceTeal: P,
+  surfaceIce: B, //                            hover / selected rows
+  surfaceSubtle: tint(B, 0.5), //              upload tiles, zebra rows
+  surfaceMuted: shade(B, 0.03), //             read-only inputs, image wells
 
-  // Borders & Dividers
-  border: '#7F9CA6',
+  // Borders & dividers
+  border: tint(P, 0.5),
   borderLight: '#D0D0D0',
-  borderInput: '#7F9CA6',
-  divider: '#E5E9EC',
+  borderInput: tint(P, 0.5),
+  borderSoft: tint(P, 0.86), //                #DCE6E9 card outlines
+  borderMedium: tint(P, 0.8), //               #D3DCE0 chips, step lines
+  borderStrong: tint(P, 0.68), //              #B9C6CB switch (off), muted icons
+  divider: tint(P, 0.9), //                    #E5E9EC
 
-  // Text Colors
-  textHeading: '#003A4E',
-  textTitle: '#0E1C21',
-  textBody: '#35494F',
-  textSecondary: '#546D76',
-  textMuted: '#7F9CA6',
+  // Text
+  textHeading: P,
+  textTitle: mix(P, '#0B0B0B', 0.75),
+  textBody: mix(P, '#5A5A5A', 0.55), //        #35494F
+  textSecondary: mix(P, '#808080', 0.6), //    #546D76
+  textMuted: tint(P, 0.5),
   textWhite: '#FFFFFF',
-  textGold: '#A8824F',
+  textGold: S,
+  textOnPrimaryMuted: tint(P, 0.6), //         placeholder text on dark bars
 
-  // Status Colors
-  success: '#28A745',
-  successLight: '#439F4A',
-  error: '#DC3545',
-  errorLight: '#FFEBEE',
-  warning: '#FFC107',
-  info: '#17A2B8',
+  // Status
+  success: ThemeConfig.success,
+  successLight: tint(ThemeConfig.success, 0.1),
+  successBg: tint(ThemeConfig.success, 0.88),
+  error: ThemeConfig.error,
+  errorLight: tint(ThemeConfig.error, 0.9),
+  errorBg: tint(ThemeConfig.error, 0.9),
+  warning: ThemeConfig.warning,
+  info: ThemeConfig.info,
+
+  // Neutral greys (from the Bootstrap admin template – not theme dependent)
+  neutralText: '#212529', //                  modal / page text
+  neutralTextSoft: '#5A5C69', //              stat numbers
+  neutralTextMuted: '#858796', //             top-bar user name
+  neutralIcon: '#B7B9CC', //                  dropdown icons
+  neutralBorder: '#E3E6F0', //                admin card / dropdown borders
+  neutralDark: '#3A3B45', //                  admin shadows, dropdown text
+  neutralDot: '#D6D6D6', //                   inactive carousel dots
+  shadow: '#000000',
 
   transparent: 'transparent',
-} as const;
+};
 
 export const Colors = {
   light: {

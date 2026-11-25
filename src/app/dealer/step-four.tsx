@@ -3,9 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { Spacing } from '@/constants/theme';
 import { BoxStep, SignupFrame } from '@/components/dealer/DealerFrames';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
 import { useDealerSignup } from '@/context/dealer-signup';
+import { Field, Btn } from '@ichrono/ui';
 
 /**
  * Dealer Create Account – Step 4: bank details

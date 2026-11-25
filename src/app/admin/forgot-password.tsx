@@ -3,8 +3,7 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
 import { AdminCardFrame, AdminH } from '@/components/admin/AdminAuthFrame';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
+import { Field, Btn } from '@ichrono/ui';
 
 /** backend_ref/views/admin/setting/forget.blade.php */
 export default function AdminForgotPasswordScreen() {

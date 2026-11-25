@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes } from '@/constants/theme';
-import Field, { ErrorText, FieldLabel } from '@/components/common/Field';
-import SelectField from '@/components/common/SelectField';
-import { CheckBox } from '@/components/common/Controls';
-import Btn from '@/components/common/Btn';
-import { AuthText, AuthTitle, SocialLogin, UserAuthFrame } from '@/components/web/UserAuthFrame';
+import { AuthText, AuthTitle, SocialLogin, UserAuthFrame } from '@/components/user/UserAuthFrame';
+import { Field, ErrorText, FieldLabel, SelectField, CheckBox, Btn } from '@ichrono/ui';
 
 /** backend_ref/views/user/setting/register.blade.php */
 const CODES = ['+91', '+44', '+1', '+971', '+49', '+33', '+41', '+39', '+81', '+65', '+61'];
@@ -94,7 +91,7 @@ export default function UserRegisterScreen() {
         }}
         label={
           <Text style={styles.terms}>
-            I agree with I-CHRONO’s <Text style={styles.gold}>Terms of Use</Text> and <Text style={styles.gold}>Policies</Text>
+            I agree with Andy Dev Design’s <Text style={styles.gold}>Terms of Use</Text> and <Text style={styles.gold}>Policies</Text>
           </Text>
         }
       />

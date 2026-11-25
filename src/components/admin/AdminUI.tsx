@@ -1,12 +1,24 @@
 import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
-import Icon from '@/components/common/Icon';
+import { Icon } from '@ichrono/ui';
 
 /** `.h2` page heading used on every admin page */
 export function PageTitle({ children, style }: { children: React.ReactNode; style?: StyleProp<ViewStyle> }) {
   return (
     <View style={style}>
+      <Text style={s.h2}>{children}</Text>
+    </View>
+  );
+}
+
+/** `.back-btn-box`: square back arrow + page heading (admin detail pages) */
+export function BackTitle({ children, onBack }: { children: React.ReactNode; onBack: () => void }) {
+  return (
+    <View style={s.backRow}>
+      <Pressable onPress={onBack} style={s.backBtn} accessibilityRole="link" accessibilityLabel="Back">
+        <Icon name="angle-left" size={16} color={Palette.primary} />
+      </Pressable>
       <Text style={s.h2}>{children}</Text>
     </View>
   );
@@ -60,7 +72,7 @@ export function ComingSoon({ title, milestone }: { title: string; milestone: str
         <Icon name="screwdriver-wrench" size={40} color={Palette.secondary} />
         <Text style={s.csTitle}>Scheduled for {milestone}</Text>
         <Text style={s.csText}>
-          This screen is part of a later milestone in the I-Chrono plan and will be built after Milestone 1 is approved.
+          This screen is part of a later milestone in the project plan and will be built after Milestone 1 is approved.
         </Text>
       </Card>
     </View>
@@ -68,6 +80,17 @@ export function ComingSoon({ title, milestone }: { title: string; milestone: str
 }
 
 const s = StyleSheet.create({
+  backRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, marginBottom: Spacing.xl },
+  backBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Palette.neutralBorder,
+    backgroundColor: Palette.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   h2: {
     color: Palette.primary,
     fontSize: 28,
@@ -77,9 +100,9 @@ const s = StyleSheet.create({
     backgroundColor: Palette.white,
     borderRadius: Radius.lg,
     borderWidth: 1,
-    borderColor: '#E3E6F0',
+    borderColor: Palette.neutralBorder,
     padding: Spacing.xl,
-    shadowColor: '#3A3B45',
+    shadowColor: Palette.neutralDark,
     shadowOpacity: 0.06,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 2 },

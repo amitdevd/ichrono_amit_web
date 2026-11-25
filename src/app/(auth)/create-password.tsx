@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
-import AppModal from '@/components/common/AppModal';
-import { AuthText, AuthTitle, UserAuthFrame } from '@/components/web/UserAuthFrame';
+import { AuthText, AuthTitle, UserAuthFrame } from '@/components/user/UserAuthFrame';
+import { Field, Btn, AppModal } from '@ichrono/ui';
 
 /** backend_ref/views/user/setting/confirm-password.blade.php */
 const RULE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;

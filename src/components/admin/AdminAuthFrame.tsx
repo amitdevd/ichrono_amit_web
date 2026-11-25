@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LOGO_BG } from '@/constants/brand';
+import { LOGO, LOGO_BG } from '@/constants/brand';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
+import { useBreakpoint } from '@ichrono/ui';
 
 /**
  * Admin auth pages – backend_ref/views/admin/setting/*.blade.php
@@ -19,8 +19,8 @@ export function AdminLoginFrame({ children }: { children: React.ReactNode }) {
           <View style={[styles.container, lgUp && { flexDirection: 'row', alignItems: 'center' }]}>
             <View style={[styles.logoDiv, lgUp && { width: '50%' }]}>
               <Image
-                source={require('@/assets/images/Logo.png')}
-                style={[styles.logo, !lgUp && { width: 260, height: 78 }]}
+                source={LOGO}
+                style={[styles.logo, !lgUp && { width: 220, height: 91 }]}
                 resizeMode="contain"
               />
             </View>
@@ -39,7 +39,7 @@ export function AdminCardFrame({ children }: { children: React.ReactNode }) {
     <View style={styles.bg}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-          <Image source={require('@/assets/images/Logo.png')} style={styles.smallLogo} resizeMode="contain" />
+          <Image source={LOGO} style={styles.smallLogo} resizeMode="contain" />
           <View style={[styles.effect, { maxWidth: 560, alignSelf: 'center' }]}>{children}</View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
   scroll: { flexGrow: 1, justifyContent: 'center', padding: Spacing.xl },
   container: { width: '100%', maxWidth: 1140, alignSelf: 'center', gap: Spacing['3xl'] },
   logoDiv: { alignItems: 'center', justifyContent: 'center', paddingVertical: Spacing.xl },
-  logo: { width: 420, height: 125 },
-  smallLogo: { width: 240, height: 72, alignSelf: 'center', marginBottom: Spacing['2xl'] },
+  logo: { width: 360, height: 148 },
+  smallLogo: { width: 200, height: 82, alignSelf: 'center', marginBottom: Spacing['2xl'] },
   loginCol: { alignItems: 'center' },
   effect: {
     width: '100%',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius['2xl'],
     paddingHorizontal: Spacing['3xl'],
     paddingVertical: Spacing['4xl'],
-    shadowColor: '#000',
+    shadowColor: Palette.shadow,
     shadowOpacity: 0.25,
     shadowRadius: 30,
     shadowOffset: { width: 0, height: 10 },

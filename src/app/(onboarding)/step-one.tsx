@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { router } from 'expo-router';
 import { Spacing } from '@/constants/theme';
-import Btn from '@/components/common/Btn';
-import { ErrorLine, OnboardingFrame, OptionGrid, useOnboarding } from '@/components/web/OnboardingFrame';
+import { ErrorLine, OnboardingFrame, OptionGrid, useOnboarding } from '@/components/user/OnboardingFrame';
+import { Btn } from '@ichrono/ui';
 
 /** backend_ref/views/user/setting/stepone.blade.php */
 const OPTIONS = [

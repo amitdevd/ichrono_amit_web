@@ -3,14 +3,9 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
 import { BoxStep, SignupFrame, ResTitle } from '@/components/dealer/DealerFrames';
-import Field, { ErrorText, FieldLabel } from '@/components/common/Field';
-import SelectField from '@/components/common/SelectField';
-import OptionChips from '@/components/common/OptionChips';
-import { CheckBox } from '@/components/common/Controls';
-import Btn from '@/components/common/Btn';
-import AppModal from '@/components/common/AppModal';
 import { useDealerSignup } from '@/context/dealer-signup';
-import { COUNTRIES } from '@/data/dummy';
+import { COUNTRIES } from '@/data';
+import { Field, ErrorText, FieldLabel, SelectField, OptionChips, CheckBox, Btn, AppModal } from '@ichrono/ui';
 
 /**
  * Dealer Create Account – Step 1
@@ -155,7 +150,7 @@ export default function DealerSignUpStepOne() {
         style={{ marginTop: Spacing.sm }}
         label={
           <Text style={styles.terms}>
-            I agree with I-CHRONO’s <Text style={styles.gold}>Terms of Use</Text> and <Text style={styles.gold}>Policies</Text>
+            I agree with Andy Dev Design’s <Text style={styles.gold}>Terms of Use</Text> and <Text style={styles.gold}>Policies</Text>
           </Text>
         }
       />

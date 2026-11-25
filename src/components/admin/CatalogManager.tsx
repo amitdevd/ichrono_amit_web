@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Palette, Spacing, FontSizes } from '@/constants/theme';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
 import { Card, PageTitle, TableAction, Thumb } from './AdminUI';
-import Btn from '@/components/common/Btn';
-import AppModal from '@/components/common/AppModal';
-import Field from '@/components/common/Field';
-import { ToggleSwitch } from '@/components/common/Controls';
-import { AvatarUpload } from '@/components/common/ImageUpload';
-import DataTable, { type Column } from '@/components/common/DataTable';
-import Icon from '@/components/common/Icon';
+import { useBreakpoint, Btn, AppModal, Field, ToggleSwitch, AvatarUpload, DataTable, type Column, Icon } from '@ichrono/ui';
 
 /**
  * Shared screen for "Brands Management" (admin/brand/index.blade.php) and
@@ -29,11 +22,16 @@ type Props = {
   inputLabel: string;
   inputPlaceholder: string;
   initial: CatalogItem[];
+  /** optional shared store (e.g. brands, which the User Web home page also shows) */
+  items?: CatalogItem[];
+  onItemsChange?: React.Dispatch<React.SetStateAction<CatalogItem[]>>;
 };
 
 export default function CatalogManager(p: Props) {
   const { mdUp } = useBreakpoint();
-  const [items, setItems] = useState<CatalogItem[]>(p.initial);
+  const [localItems, setLocalItems] = useState<CatalogItem[]>(p.initial);
+  const items = p.items ?? localItems;
+  const setItems = p.onItemsChange ?? setLocalItems;
   const [modal, setModal] = useState<null | 'add' | 'edit' | 'delete'>(null);
   const [current, setCurrent] = useState<CatalogItem | null>(null);
   const [name, setName] = useState('');
@@ -137,7 +135,7 @@ export default function CatalogManager(p: Props) {
       {/* Delete */}
       <AppModal visible={modal === 'delete'} onClose={close} title="Confirm Delete">
         <View style={styles.deleteBody}>
-          <Icon name="trash-can" size={56} color="rgba(0,58,78,0.97)" />
+          <Icon name="trash-can" size={56} color={Palette.primary} />
           <Text style={styles.deleteText}>Confirm {p.noun} Deletes</Text>
           <View style={styles.modalBtns}>
             <Btn
@@ -163,5 +161,5 @@ const styles = StyleSheet.create({
   errorCenter: { color: Palette.error, fontSize: FontSizes.xs, textAlign: 'center' },
   modalBtns: { flexDirection: 'row', justifyContent: 'center', gap: 14, marginTop: Spacing.xl },
   deleteBody: { alignItems: 'center', paddingVertical: Spacing.xl },
-  deleteText: { marginTop: Spacing.md, color: '#212529', fontSize: FontSizes.lg, fontWeight: '500' },
+  deleteText: { marginTop: Spacing.md, color: Palette.neutralText, fontSize: FontSizes.lg, fontWeight: '500' },
 });

@@ -10,9 +10,9 @@ import {
   View,
 } from 'react-native';
 import { router } from 'expo-router';
-import { LOGO_BG } from '@/constants/brand';
+import { LOGO, LOGO_BG } from '@/constants/brand';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
+import { useBreakpoint } from '@ichrono/ui';
 
 /**
  * Page frames for the dealer auth screens (backend_ref/views/dealer/auth/*):
@@ -25,7 +25,7 @@ function SignupHeader() {
   return (
     <View style={s.signupHeader}>
       <Pressable onPress={() => router.push('/dealer/login' as any)}>
-        <Image source={require('@/assets/images/Logo.png')} style={s.headerLogo} resizeMode="contain" />
+        <Image source={LOGO} style={s.headerLogo} resizeMode="contain" />
       </Pressable>
     </View>
   );
@@ -105,10 +105,7 @@ export function SplitFrame({ children }: { children: React.ReactNode }) {
       <ScrollView contentContainerStyle={[s.scroll, { justifyContent: 'center', flexGrow: 1 }]} keyboardShouldPersistTaps="handled">
         <View style={[s.split, lgUp && { flexDirection: 'row' }]}>
           <View style={[s.splitImg, lgUp && { width: '45%', minHeight: 480 }]}>
-            <View style={s.circleBox}>
-              <Image source={require('@/assets/images/fav-icon.png')} style={s.circleLogo} resizeMode="contain" />
-            </View>
-            <Image source={require('@/assets/images/Logo.png')} style={s.splitLogo} resizeMode="contain" />
+            <Image source={LOGO} style={s.splitLogo} resizeMode="contain" />
           </View>
           <View style={[s.splitContent, lgUp && { width: '55%', padding: Spacing['4xl'] }]}>{children}</View>
         </View>
@@ -139,7 +136,7 @@ const s = StyleSheet.create({
     paddingVertical: 14,
     alignItems: 'center',
   },
-  headerLogo: { width: 170, height: 44 },
+  headerLogo: { width: 120, height: 50 },
   scroll: { padding: Spacing.lg, paddingBottom: 60 },
   createPanel: { width: '100%', maxWidth: 720, alignSelf: 'center' },
   stepRow: {
@@ -167,13 +164,13 @@ const s = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
   },
   stepNum: { fontSize: FontSizes.xs, fontWeight: FontWeights.bold, color: Palette.loginBack },
-  stepLine: { flex: 1, maxWidth: 90, height: 2, backgroundColor: '#D3DCE0' },
+  stepLine: { flex: 1, maxWidth: 90, height: 2, backgroundColor: Palette.borderMedium },
   stepLineOn: { backgroundColor: Palette.secondary },
   card: {
     backgroundColor: Palette.white,
     borderRadius: Radius.xl,
     borderWidth: 1,
-    borderColor: '#DCE4E7',
+    borderColor: Palette.borderSoft,
     padding: Spacing['2xl'],
     shadowColor: Palette.primary,
     shadowOpacity: 0.06,
@@ -201,18 +198,7 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 220,
   },
-  circleBox: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderWidth: 2,
-    borderColor: Palette.secondary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: Spacing.xl,
-  },
-  circleLogo: { width: 60, height: 60 },
-  splitLogo: { width: 220, height: 55 },
+  splitLogo: { width: 260, height: 107 },
   splitContent: { padding: Spacing['3xl'], justifyContent: 'center' },
   resTitle: { alignItems: 'center', marginBottom: Spacing['2xl'] },
   resH2: { color: Palette.primary, fontSize: 28, fontWeight: FontWeights.bold, textAlign: 'center' },

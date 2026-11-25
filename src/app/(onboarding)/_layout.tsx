@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { Palette } from '@/constants/theme';
-import { OnboardingProvider } from '@/components/web/OnboardingFrame';
+import { OnboardingProvider } from '@/components/user/OnboardingFrame';
 
 export default function OnboardingLayout() {
   return (

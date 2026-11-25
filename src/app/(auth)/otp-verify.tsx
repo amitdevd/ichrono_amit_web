@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
-import { AuthText, AuthTitle, UserAuthFrame } from '@/components/web/UserAuthFrame';
+import { AuthText, AuthTitle, UserAuthFrame } from '@/components/user/UserAuthFrame';
+import { Field, Btn } from '@ichrono/ui';
 
 /**
  * user/setting/otp-verify.blade.php        (mode=register → onboarding questions)

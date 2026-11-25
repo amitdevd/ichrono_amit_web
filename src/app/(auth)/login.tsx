@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { router } from 'expo-router';
-import { Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import { Palette, Spacing } from '@/constants/theme';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
-import { AuthText, AuthTitle, SocialLogin, UserAuthFrame } from '@/components/web/UserAuthFrame';
+import { AuthText, AuthTitle, SocialLogin, UserAuthFrame } from '@/components/user/UserAuthFrame';
 import { useAuth } from '@/context/auth-context';
+import { Field, Btn } from '@ichrono/ui';
 
 /** backend_ref/views/user/setting/login.blade.php */
 export default function UserLoginScreen() {
@@ -63,6 +62,9 @@ export default function UserLoginScreen() {
       </AuthText>
       <Btn title="Login" variant="customBtn3" loading={isLoading} onPress={submit} />
       <SocialLogin />
+      <Pressable onPress={() => router.replace('/home' as any)} style={{ alignItems: 'center', marginTop: Spacing.xl }} hitSlop={6}>
+        <Text style={{ color: Palette.secondary, fontWeight: '600' }}>Continue as Guest</Text>
+      </Pressable>
     </UserAuthFrame>
   );
 }

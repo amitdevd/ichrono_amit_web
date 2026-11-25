@@ -20,10 +20,12 @@ type AuthState = {
   isLoggedIn: boolean;
   isLoading: boolean;
   isOnboarded: boolean;
+  /** false until a saved session (web localStorage) has been restored */
+  isReady: boolean;
 };
 
 type AuthContextValue = AuthState & {
-  login: (email: string, password: string, forceRole?: UserRole) => Promise<AuthUser>;
+  login: (email: string, password: string, forceRole?: UserRole, name?: string) => Promise<AuthUser>;
   register: (email: string, mobile: string, password: string, role?: UserRole) => Promise<AuthUser>;
   logout: (redirectTo?: string) => void;
   setOnboarded: () => void;
@@ -32,6 +34,33 @@ type AuthContextValue = AuthState & {
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+
+// ─── Session persistence (web only, front-end demo) ─────────────────────────
+const STORAGE_KEY = 'ichrono.auth';
+
+function readSession(): Pick<AuthState, 'user' | 'role' | 'isLoggedIn' | 'isOnboarded'> | null {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return null;
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeSession(state: AuthState) {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    if (state.isLoggedIn && state.user) {
+      const { user, role, isLoggedIn, isOnboarded } = state;
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ user, role, isLoggedIn, isOnboarded }));
+    } else {
+      window.localStorage.removeItem(STORAGE_KEY);
+    }
+  } catch {
+    // storage unavailable (private mode, native) – session stays in memory
+  }
+}
 
 // ─── Role Home Route Mapper ──────────────────────────────────────────────────
 export const getHomeRouteForRole = (role?: UserRole | null): string => {
@@ -65,14 +94,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isLoggedIn: false,
     isLoading: false,
     isOnboarded: false,
+    isReady: false,
   });
+
+  // Restore after mount (not during render) so the static pre-render and the
+  // first client render match.
+  useEffect(() => {
+    const saved = readSession();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time restore from localStorage after hydration
+    setState((prev) => ({ ...prev, ...(saved ?? {}), isReady: true }));
+  }, []);
+
+  useEffect(() => {
+    if (state.isReady) writeSession(state);
+  }, [state]);
 
   const setOnboarded = useCallback(() => {
     setState((prev) => ({ ...prev, isOnboarded: true }));
   }, []);
 
   const login = useCallback(
-    async (email: string, _password: string, forceRole?: UserRole): Promise<AuthUser> => {
+    async (email: string, _password: string, forceRole?: UserRole, displayName?: string): Promise<AuthUser> => {
       setState((prev) => ({ ...prev, isLoading: true }));
 
       // Simulate network request
@@ -91,7 +133,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const authenticatedUser: AuthUser = {
         id: `usr_${Date.now()}`,
         email,
-        name: resolvedRole === 'admin' ? 'Super Administrator' : resolvedRole === 'dealer' ? 'Certified Dealer' : 'Member Enthusiast',
+        name:
+          displayName ??
+          (resolvedRole === 'admin' ? 'Super Administrator' : resolvedRole === 'dealer' ? 'Certified Dealer' : 'Member Enthusiast'),
         role: resolvedRole,
         isVerified: true,
       };
@@ -102,6 +146,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoggedIn: true,
         isLoading: false,
         isOnboarded: true,
+        isReady: true,
       });
 
       return authenticatedUser;
@@ -130,6 +175,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoggedIn: true,
         isLoading: false,
         isOnboarded: false,
+        isReady: true,
       });
 
       return newUser;
@@ -144,6 +190,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isLoggedIn: false,
       isLoading: false,
       isOnboarded: false,
+      isReady: true,
     });
     router.replace(redirectTo as any);
   }, []);

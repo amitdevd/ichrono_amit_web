@@ -3,10 +3,8 @@ import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
 import { BoxStep, SignupFrame } from '@/components/dealer/DealerFrames';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
-import Icon from '@/components/common/Icon';
 import { useDealerSignup } from '@/context/dealer-signup';
+import { Field, Btn, Icon } from '@ichrono/ui';
 
 /**
  * Dealer Create Account – Step 3: address & business identifiers
@@ -151,7 +149,7 @@ const styles = StyleSheet.create({
   map: {
     height: 340,
     borderRadius: Radius.lg,
-    backgroundColor: '#E8EFF1',
+    backgroundColor: Palette.surfaceMuted,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',

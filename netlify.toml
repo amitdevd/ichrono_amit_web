@@ -1,0 +1,14 @@
+# Netlify settings for the Andy Dev Design web app (Expo Router, static web export).
+# The whole project (user, dealer and admin) is ONE app built from the project root:
+#   /home, /login …          → User Web
+#   /dealer/login …          → Dealer
+#   /admin/login …           → Admin
+# apps/* and packages/* are only code folders inside it, not separate sites.
+
+[build]
+  base = ""
+  command = "npx expo export -p web && cp dist/+not-found.html dist/404.html"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

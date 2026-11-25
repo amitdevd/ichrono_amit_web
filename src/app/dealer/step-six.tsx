@@ -3,10 +3,8 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
 import { BoxStep, SignupFrame } from '@/components/dealer/DealerFrames';
-import AppModal from '@/components/common/AppModal';
-import Btn from '@/components/common/Btn';
-import Icon from '@/components/common/Icon';
 import { useDealerSignup } from '@/context/dealer-signup';
+import { AppModal, Btn, Icon } from '@ichrono/ui';
 
 /**
  * Dealer Create Account – Step 6: Summary + Save → "Profile is Submitted"
@@ -169,7 +167,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.lg,
     borderWidth: 1,
     borderColor: Palette.divider,
-    backgroundColor: '#FAFCFC',
+    backgroundColor: Palette.surfaceSubtle,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',

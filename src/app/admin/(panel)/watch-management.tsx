@@ -1,5 +1,5 @@
 import CatalogManager from '@/components/admin/CatalogManager';
-import { CATEGORIES } from '@/data/dummy';
+import { CATEGORIES } from '@/data';
 
 /** backend_ref/views/admin/watch/index.blade.php */
 export default function WatchCategoryManagement() {

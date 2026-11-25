@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { LOGO, LOGO_ON_LIGHT } from '@/constants/brand';
 import {
   Image,
   Modal,
@@ -10,9 +11,8 @@ import {
 } from 'react-native';
 import { router, usePathname } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
 import { useAuth } from '@/context/auth-context';
-import Icon from '@/components/common/Icon';
+import { useBreakpoint, Icon } from '@ichrono/ui';
 
 /**
  * Admin panel chrome recreated from backend_ref/views/admin/layout/aside.blade.php:
@@ -43,10 +43,13 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
+  // Close the drawer / profile menu whenever the page changes.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
     setDrawerOpen(false);
     setMenuOpen(false);
-  }, [pathname]);
+  }
 
   const toggle = () => (lgUp ? setCollapsed((c) => !c) : setDrawerOpen((o) => !o));
   const displayName = user?.role === 'admin' ? user.name : 'Douglas McGee';
@@ -76,11 +79,9 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       {/* Top bar */}
       <View style={styles.topbar}>
         <Pressable onPress={() => router.push('/admin/dashboard' as any)} style={styles.brand}>
-          <Image
-            source={require('@/assets/images/Logo.png')}
-            style={[styles.logo, isMobile && { width: 150 }]}
-            resizeMode="contain"
-          />
+          <View style={styles.logoBadge}>
+            <Image source={LOGO_ON_LIGHT} style={[styles.logo, isMobile && { width: 110, height: 46 }]} resizeMode="contain" />
+          </View>
         </Pressable>
         <Pressable onPress={toggle} style={styles.bars} accessibilityLabel="Toggle menu">
           <Icon name="bars" size={20} color={Palette.primary} />
@@ -110,7 +111,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               style={({ hovered }: any) => [styles.ddItem, hovered && styles.ddHover]}
               onPress={() => setMenuOpen(false)}
             >
-              <Icon name="gears" size={13} color="#B7B9CC" />
+              <Icon name="gears" size={13} color={Palette.neutralIcon} />
               <Text style={styles.ddText}>Settings</Text>
             </Pressable>
             <View style={styles.ddDivider} />
@@ -118,7 +119,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               style={({ hovered }: any) => [styles.ddItem, hovered && styles.ddHover]}
               onPress={() => logout('/admin/login')}
             >
-              <Icon name="right-from-bracket" size={13} color="#B7B9CC" />
+              <Icon name="right-from-bracket" size={13} color={Palette.neutralIcon} />
               <Text style={styles.ddText}>Logout</Text>
             </Pressable>
           </View>
@@ -130,7 +131,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         <View style={styles.drawerBackdrop}>
           <View style={styles.drawer}>
             <View style={styles.drawerHead}>
-              <Image source={require('@/assets/images/Logo.png')} style={{ width: 160, height: 40 }} resizeMode="contain" />
+              <Image source={LOGO} style={{ width: 120, height: 50 }} resizeMode="contain" />
               <Pressable onPress={() => setDrawerOpen(false)} hitSlop={10}>
                 <Icon name="xmark" size={20} color={Palette.white} />
               </Pressable>
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingRight: Spacing.xl,
-    shadowColor: '#3A3B45',
+    shadowColor: Palette.neutralDark,
     shadowOpacity: 0.15,
     shadowRadius: 28,
     shadowOffset: { width: 0, height: 2 },
@@ -160,11 +161,12 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   brand: { width: SIDEBAR_W, alignItems: 'center', justifyContent: 'center', height: '100%' },
-  logo: { width: 200, height: 52 },
+  logoBadge: { paddingHorizontal: 10 },
+  logo: { width: 136, height: 56 },
   bars: { marginLeft: Spacing.lg, padding: Spacing.sm },
-  divider: { width: 1, height: 40, backgroundColor: '#E3E6F0', marginHorizontal: Spacing.lg },
+  divider: { width: 1, height: 40, backgroundColor: Palette.neutralBorder, marginHorizontal: Spacing.lg },
   profile: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  profileName: { color: '#858796', fontSize: FontSizes.sm },
+  profileName: { color: Palette.neutralTextMuted, fontSize: FontSizes.sm },
   avatar: { width: 42, height: 42, borderRadius: 21, backgroundColor: Palette.surfaceIce },
   body: { flex: 1, flexDirection: 'row' },
   sidebar: { flex: 1, backgroundColor: Palette.primary },
@@ -191,9 +193,9 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.white,
     borderRadius: Radius.sm,
     borderWidth: 1,
-    borderColor: '#E3E6F0',
+    borderColor: Palette.neutralBorder,
     paddingVertical: 6,
-    shadowColor: '#000',
+    shadowColor: Palette.shadow,
     shadowOpacity: 0.15,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
@@ -201,9 +203,9 @@ const styles = StyleSheet.create({
     zIndex: 20,
   },
   ddItem: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 10, paddingHorizontal: 16 },
-  ddHover: { backgroundColor: '#F8F9FC' },
-  ddText: { color: '#3A3B45', fontSize: FontSizes.sm },
-  ddDivider: { height: 1, backgroundColor: '#E3E6F0', marginVertical: 4 },
+  ddHover: { backgroundColor: Palette.surfaceSubtle },
+  ddText: { color: Palette.neutralDark, fontSize: FontSizes.sm },
+  ddDivider: { height: 1, backgroundColor: Palette.neutralBorder, marginVertical: 4 },
   drawerBackdrop: { flex: 1, flexDirection: 'row', backgroundColor: 'rgba(0,0,0,0.45)' },
   drawer: { width: 280, backgroundColor: Palette.primary },
   drawerHead: {

@@ -3,8 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
 import { AdminCardFrame, AdminH } from '@/components/admin/AdminAuthFrame';
-import OtpInput from '@/components/OtpInput';
-import Btn from '@/components/common/Btn';
+import { OtpInput, Btn } from '@ichrono/ui';
 
 /** backend_ref/views/admin/setting/otp_verify.blade.php */
 export default function AdminOtpVerifyScreen() {
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
   danger: { color: Palette.error, textAlign: 'center', marginBottom: Spacing.md },
   label: { textAlign: 'center', color: Palette.textBody, fontSize: FontSizes.sm, fontWeight: FontWeights.medium, marginBottom: Spacing.md },
   resend: { alignItems: 'center', marginTop: Spacing['2xl'], marginBottom: Spacing['2xl'], gap: 6 },
-  resendBtn: { backgroundColor: '#F8F9FA', borderRadius: Radius.sm, paddingHorizontal: 16, paddingVertical: 8 },
+  resendBtn: { backgroundColor: Palette.surfaceSubtle, borderRadius: Radius.sm, paddingHorizontal: 16, paddingVertical: 8 },
   resendText: { color: Palette.primary, fontSize: FontSizes.sm, fontWeight: FontWeights.medium },
   timer: { color: Palette.textSecondary, fontSize: FontSizes.sm },
   demo: { textAlign: 'center', color: Palette.textMuted, fontSize: FontSizes.xs, marginTop: Spacing.md },

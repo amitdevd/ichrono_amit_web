@@ -3,10 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights } from '@/constants/theme';
 import { AdminCardFrame, AdminH } from '@/components/admin/AdminAuthFrame';
-import Field from '@/components/common/Field';
-import Btn from '@/components/common/Btn';
-import AppModal from '@/components/common/AppModal';
-import Icon from '@/components/common/Icon';
+import { Field, Btn, AppModal, Icon } from '@ichrono/ui';
 
 /** backend_ref/views/admin/setting/create_password.blade.php */
 const RULE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;

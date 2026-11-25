@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Palette, Spacing, FontSizes, FontWeights, Radius } from '@/constants/theme';
-import Btn from '@/components/common/Btn';
-import AppModal from '@/components/common/AppModal';
-import { Radio } from '@/components/common/Controls';
-import { ErrorLine, OnboardingFrame, useOnboarding } from '@/components/web/OnboardingFrame';
+import { ErrorLine, OnboardingFrame, useOnboarding } from '@/components/user/OnboardingFrame';
+import { Btn, AppModal, Radio } from '@ichrono/ui';
 
 /** backend_ref/views/user/setting/stepfive.blade.php (+ .submitSucces modal) */
 const GENDERS = [
